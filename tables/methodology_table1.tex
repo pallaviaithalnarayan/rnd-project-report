@@ -1,0 +1,22 @@
+% methodology_table1.tex
+
+\begin{table}[htbp]
+    \centering
+    \caption{Summary of Software and Tools}
+    \label{tab:software_tools_requirements}
+    \begin{tabular}{@{}llll@{}}
+        \toprule
+        \textbf{Category} & \textbf{Tool/Software} & \textbf{Description} & \textbf{Version} \\ \midrule
+        \multirow{2}{*}{\textbf{Synthetic Data Generation}} & AirSim & Simulator for generating synthetic aerial imagery. & AirSim 1.6.3 \\
+         & Unreal Engine & Real-time 3D creation tool for designing synthetic environments. & UE 4.27, 5.2 \\ \midrule
+        \textbf{Real-World Aerial Dataset} & ISPRS Dataset & High-resolution aerial imagery with semantic annotations. & Latest available \\ \midrule
+        \multirow{3}{*}{\textbf{Semantic Segmentation Models}} & SegFormer & Transformer-based segmentation model. & Repository version \\
+         & U-Net & Encoder-decoder CNN architecture for segmentation. & Custom/Segmentation Models PyTorch \\
+         & DeepLabv3+ & Advanced segmentation model with atrous convolution. & TensorFlow repository version \\ \midrule
+        {\textbf{Machine Learning Framework}} & PyTorch & Deep learning library for model training and evaluation. & 1.12+ \\ \midrule
+        \multirow{2}{*}{\textbf{Version Control}} & Git & Distributed version control system. & 2.34+ \\
+         & GitHub/GitLab & Platforms for hosting Git repositories. & Latest available \\ \midrule
+        {\textbf{IDEs}} & VS Code & Source code editor with debugging and Git integration. & 1.62+ \\
+    \bottomrule
+    \end{tabular}
+\end{table}

@@ -1,56 +1,153 @@
 %!TEX root = ../report.tex
 \documentclass[../report.tex]{subfiles}
 
+% \begin{document}
+%     \section{Introduction}
+%     \label{sec:introduction}
+
+%     This is a template for MAS R\&D projects, based on \emph{IEEETran}.
+%     Here are some preliminaries about some common things you need to do to use the template:
+%     \begin{itemize}
+%         \item Add your references to the file \emph{references.bib} and cite them as Mustermann and Smith \cite{referenceexample} (if there are more than three authors, cite as Mustermann et al. \cite{referenceexample}).
+%         \item Refer to sections as Sec. \ref{sec:introduction}.
+%         \item You can include figures as follows (note that the figure caption is below the figure).
+%         \begin{figure}[ht]
+%             \centering
+%             \includegraphics[width=0.8\linewidth]{figures/b-it-logo.pdf}
+%             \caption{My caption}
+%             \label{fig:figureexample}
+%         \end{figure}
+%         Refer to figures as Fig. \ref{fig:figureexample}.
+%         \item You can add tables as follows (note that the table caption is above the table).
+%         \begin{table}[ht]
+%             \caption{My caption}
+%             \label{tab:tableexample}
+%             \begin{tabular}{M{0.45\linewidth} M{0.45\linewidth}}
+%                 \hline
+%                 \cellcolor{gray!10!white} Header 1 & \cellcolor{gray!10!white} Header 2 \\\hline
+%                 Cell 1 & Cell 2 \\\hline
+%                 Cell 3 & Cell 4 \\\hline
+%             \end{tabular}
+%         \end{table}
+%         Refer to tables as Tab. \ref{tab:tableexample}.
+%         \item You can add equations as follows.
+%         \begin{equation}
+%             f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}\left( \frac{x - \mu}{\sigma} \right)^2}
+%             \label{eq:equationexample}
+%         \end{equation}
+%         Refer to equations as Eq. \ref{eq:equationexample}.
+%     \end{itemize}
+
+%     \subsection{Motivation}
+%     \label{sec:introduction:motivation}
+
+%     Describe the context of your work and the motivation for it.
+
+%     \subsection{Problem Statement}
+%     \label{sec:introduction:problem_statement}
+
+%     Describe the problem you are addressing in the work.
+
+%     \subsection{Proposed Approach}
+%     \label{sec:introduction:proposed_approach}
+
+%     Write a short summary of your proposed approach.
+
+% \end{document}
+
 \begin{document}
     \section{Introduction}
     \label{sec:introduction}
+    % what background the reader needs? What is the hypothesis?
+    Compared to traditional way of generating the ground truths for semantic segmentation, we use airsim which is developed by Microsoft is one of the modern approach of generating different types of data to be used for AI research to experiment with deep learning, computer vision and reinforcement learning algorithms for autonomous vehicles. 
+    In this paper, we focus mainly on generating the semantic segmentation along with images from the scene, whereas using the airsim plugin we can also obtain bounding boxes for object detection, depth for depth estimation, etc. 
 
-    This is a template for MAS R\&D projects, based on \emph{IEEETran}.
-    Here are some preliminaries about some common things you need to do to use the template:
-    \begin{itemize}
-        \item Add your references to the file \emph{references.bib} and cite them as Mustermann and Smith \cite{referenceexample} (if there are more than three authors, cite as Mustermann et al. \cite{referenceexample}).
-        \item Refer to sections as Sec. \ref{sec:introduction}.
-        \item You can include figures as follows (note that the figure caption is below the figure).
-        \begin{figure}[ht]
-            \centering
-            \includegraphics[width=0.8\linewidth]{figures/b-it-logo.pdf}
-            \caption{My caption}
-            \label{fig:figureexample}
-        \end{figure}
-        Refer to figures as Fig. \ref{fig:figureexample}.
-        \item You can add tables as follows (note that the table caption is above the table).
-        \begin{table}[ht]
-            \caption{My caption}
-            \label{tab:tableexample}
-            \begin{tabular}{M{0.45\linewidth} M{0.45\linewidth}}
-                \hline
-                \cellcolor{gray!10!white} Header 1 & \cellcolor{gray!10!white} Header 2 \\\hline
-                Cell 1 & Cell 2 \\\hline
-                Cell 3 & Cell 4 \\\hline
-            \end{tabular}
-        \end{table}
-        Refer to tables as Tab. \ref{tab:tableexample}.
-        \item You can add equations as follows.
-        \begin{equation}
-            f(x) = \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{1}{2}\left( \frac{x - \mu}{\sigma} \right)^2}
-            \label{eq:equationexample}
-        \end{equation}
-        Refer to equations as Eq. \ref{eq:equationexample}.
-    \end{itemize}
+    From the cityscapes paper, we see that to generate a single segmentation of an image took approximately 2.5 hours, which needs more time and resource for data collection. Our approach is to collect data with less time and effort with synthetic data generation. There is a room for open research to understand if using synthetic data improves the machine learning models? if it improves, how well can it perform testing with real data? These are the questions that are focused on in this paper. There is existing research in the ground perspective, so we are focusing on the aerial perspective to cover the aerial applications. 
+
+    When we do supervised learning, the model depends totally on the data with fine ground truth. When human labels the data there are chances of mistakes compared to our approach as obsereved these human errors can be managed well since no manual segmentation is required. The objects from the scene get segmented based on it's assigned segmentation object id. 
+
+    We can also observe how varying certain parameters with data generation will change the model's performance for example: different heights, weather, environments, number of data, etc. 
+    
+    With this brief introduction one gets to understand how the modern approaches are helping researchers to focus more on generating their own datasets instead of training the models without the knowledge of what data they are using. 
+    
+    
+    With the development of artificial intelligence, machines can distinguish between different classes of objects and background areas in images by using semantic segmentation tasks. For models to learn how to recognize the context in digital images which can include people, landscapes, medical images, and much more semantic segmentation has emerged as a vital technique. The primary aim is to explore the feasibility of utilizing synthetic data, this includes a comparative assessment of segmentation models.Though numerous datasets are available for more intricate computer vision applications, datasets from the aerial perspective are lacking to train machine learning algorithms. 
+    % what background the reader needs? What is the hypothesis?
+
+    % Deep learning is a subset of machine learning that allows computers to learn complex terms from simple representations arranged into layers \cite{Holdsworth_Scapicchio_2024}. This approach has a wide range of applications, including computer vision, which is still challenging when identifying colors, shapes, illumination, and properties of objects in an image.
+
+    % A crucial part of many computer vision applications is feature detection and matching, where \textit{keypoint features}, also called \textit{interest points}, are good indicators of object boundaries in an image, such as corners, edges, or curves \cite{szeliski_computer_2022}.
+
+    % The task of identifying a place shown in an image or a sequence of images and matching  it to a recent image of the same place is referred to in the field as \gls{vpr} \cite{chen_deep_2017}. \gls{vpr} commonly relies on three main approaches: matching local features, using global image descriptors, or a combination of both. The local feature-matching method can be difficult to scale and often proves ineffective. On the other hand, global image descriptors do not require a detection phase, making them less expensive to compute \cite{masone_survey_2021} \cite{xu_vision-based_2018}.
+    
+    % An important piece of information for identifying a place is semantics. However, traditional localization techniques usually ignore semantics \cite{xu_vision-based_2018}, which is why a learning-based method is expected for this kind of problem.
+    
+% ---------------------------------------------------------------------------
 
     \subsection{Motivation}
     \label{sec:introduction:motivation}
+    % why should someone care?
 
-    Describe the context of your work and the motivation for it.
+    Fraunhofer FKIE's aim in this R\&D project is to research in aerial applications using these segmentation models to understand if there are any hidden objects or threats in Miliray aeras.  
+    Also for scene understanding such as forest, urban land, agricultural land, etc. Detecting roads, buildings, vehicles, parking lots, construction sites for traffic management, urban planning, timely scene comparision
+
+    If the synthetic data improves the model along with real data. There will be less effort required to collect the real data and try to replicate the same number of classes with varying environments in the synthetic data generation.
+    This helps the model learn better with synthetic data. Reducing the man power and various restrictions of collecting data in real-time. 
+
+    Synthetic data generation not only helps in aerial applications can also be used for various topics of interest. 
+    
+
+    
+    % According to the Garrulus project \cite{hbrsGARRULUS} from TREE Institute, the main tree species in Germany have been losing their strength and dying due to increased pest infestations and more frequent extreme weather conditions. In North Rhine-Westphalia 50\% of all spruce trees have been lost. As a result, it is necessary to replant over 135,000 hectares of damaged land.
+    
+    % Effective forest management requires information on individual trees, which becomes unpractical when covering large forest areas \cite{xu_novel_2023}. Traditional methods of forest inventorying are time and resource-intensive, so alternative approaches are being developed to make it easier to assess the distinguishing characteristics of forest trees and stands \cite{kuzelka_mapping_2018}.
+    
+    % The Garrulus project operates an \gls{uav} over forest grounds, which tends to be extremely challenging due to occlusions, changes in illumination, and varying altitudes, among other issues experienced on outdoor scenes. Moreover, data is usually collected over several days, leading to significant changes that make it difficult to determine the location of previous images.
+
+    % Seeking for points of interest in a forest map and comparing them with other features from images of the same area taken months later, will facilitate the use of the data for localization or the detection of anomalies. This information can then be used to implement any necessary changes promptly. 
+
+% ----------------------------------------------------------------------------
 
     \subsection{Problem Statement}
     \label{sec:introduction:problem_statement}
+    % What to do?
 
-    Describe the problem you are addressing in the work.
+    Machine learning algorithms require large-scale, high-quality, and diversified training datasets for supervised learning techniques. As the existing researches are mainly focusing on ground perspective semantic segmentation for autonomous driving applications, we observed there is a keen research requirement in the aerial fields.  
 
-    \subsection{Proposed Approach}
-    \label{sec:introduction:proposed_approach}
+    Focusing the aerial semantic segmentation, the images are generated from aerial view with groundtruth for supervised training. 
 
-    Write a short summary of your proposed approach.
+    This R\&D aims to evaluate semantic segmentation using synthetic data generated from Unreal game Engine with the help of Airsim.
+
+    Existing datasets and methodologies may not be sufficient for addressing aerial applications. 
+    
+    The upcoming sections provide an in-depth overview of the state of the art, illustrating how different authors overcome these challenges through deep learning-based approaches for semantic segmentation. Furthermore, this paper will outline proposed method, along with the evaluation of the models, conclusions, challenges faced, existing limitations, and future exploration.
+
+    
+    % Machine learning algorithms require large-scale, high-quality, and diversified training datasets.
+    % The collection and annotation of real-world data are expensive, time-consuming, and fraught with privacy and ethical concerns. They might not cover a broad spectrum of circumstances or edge cases. The datasets and approaches that currently exist might not be able to meet certain needs or interest cases, including studying particular characteristics that affect model performance.
+    % Existing datasets and methodologies may not be sufficient for addressing specific requirements or use cases, such as examining certain attributes that impact model performance. Utilizing cutting-edge simulation environments and game engines helps to develop tailored datasets for certain scenarios or domains. 
+
+    % The project's goal is to contribute to the field of semantic segmentation by investigating the possibilities of artificial training data generated from simulations, which may address the issues involved with gathering and annotating real-world data.
+    
+    %What to do
+
+    % Aligning images taken by an \gls{uav} with other images from a similar perspective  due to the smaller area covered in comparison with satellite images, which contains a larger landscape.
+    
+    % As discussed in the next section, current leading methods generally focus on correlating satellite images with drone images in forested areas or matching drone images with those captured by cars in urban environments. Additionally, numerous strategies seek to eliminate dependence on GPS and rely solely on visual data.
+    
+    % This project aims to apply a computer vision technique to identify features of interest in a forest that remain invariant regardless of the season in which the images were captured. Although small-scale images taken by \glspl{uav} can be challenging, this project will utilize GPS information to enhance image-to-image localization.
+
+    % Figure \ref{fig:matching_source_query} illustrates the expected results of this project for seasonal-invariant \gls{uav} localization with a known map as the source and an image crop from a later map as the query. To ensure successful matching over time, it's crucial to identify robust and reliable features.
+
+    % \begin{figure}[!h]
+    %   \centering
+    %   % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    %    \includegraphics[width=1.0\linewidth]{figures/matching_source_query.png}
+    %    \caption{Seasonal-invariant UAV localization using image data and a known map}
+    %    \label{fig:matching_source_query}
+    % \end{figure}
+
+    % The following sections provide an in-depth overview of the state of the art, illustrating how different authors overcome these challenges through deep learning-based approaches for image matching. Furthermore, this paper will outline proposed method, along with the evaluation of the model, conclusions, identified limitations, and suggest avenues for future exploration.
+    
 
 \end{document}
