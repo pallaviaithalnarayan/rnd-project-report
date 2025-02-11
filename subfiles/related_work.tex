@@ -5,6 +5,18 @@
     \section{Related Work}
     \label{sec:related_work}
 
-    Summarise the relevant related work in this section and position your work with respect to the related work.
+    % Summarise the relevant related work in this section and position your work with respect to the related work.
+    Deep learning architectures have significantly advanced the field of semantic segmentation in recent years. Modern semantic segmentation techniques were made possible by Long et al.'s (2015)\cite{long2015fully} development of \gls{fcn}. Building on this framework, Ronneberger et al. (2015)\cite{ronneberger2015u} transformed the field by enabling fine-grained segmentation and accurate boundary preservation with the introduction of skip connections between encoder and decoder paths with the U-Net architecture. Semantic segmentation has evolved further with the advent of transformer-based systems. Xie et al. (2021)\cite{xie2021segformer} proposed SegFormer which removed the necessity for positional encodings while preserving computing efficiency by introducing a hierarchical transformer encoder with an effective MLP decoder. 
+
+    In parallel, several approaches have explored synthetic data for semantic segmentation. Richter et al. (2016)\cite{richter2016playing} pioneered the use of gaming engines for synthetic data generation, extracting semantic segmentation ground truths from Grand Theft Auto V. Although groundbreaking, their approach was limited to ground-level perspectives and required manual intervention for data collection. In the paper "Semantic segmentation of urban scenes via domain adaptation of SYNTHIA"\cite{ros2017semantic} Ros et al.(2017) provided a large-scale synthetic dataset for urban scene understanding, but focused primarily on street-level views limiting its applicability to aerial perspectives.
+    
+    Griffiths et al. (2019)\cite{griffiths2019synthcity} presented SynthCity, a synthetic dataset created using Unreal Engine 4, in the aerial domain. Similarly, the MidAir\cite{fonder2019mid} dataset for drone flights was presented by Fonder et al. (2019). Most similar to our approach, whereas their method is restricted to particular heights and fixed aircraft trajectories.
+
+    For simulation-based approaches, Shah et al. (2018) developed AirSim \cite{shah2018airsim}, providing capabilities for generating synthetic data with precise ground truth annotations.
+    L Laux et al. (2022)\cite{laux2022build} extended this by proposing an automated pipeline for generating training data using Unreal Engine, but again focused on object detection tasks.
+    
+    Ma et al.(2019)\cite{ma2019deep} draw attention to the notable discrepancy in dataset sizes between aerial and ground viewpoints. Aerial datasets like ISPRS Vaihingen, Potsdam\cite{markus2014use}, and UAVid\cite{lyu2020uavid} are significantly smaller in scale with only 33 patches, 38 patches, and 300 images, respectively, whereas ground-level datasets like PASCAL VOC\cite{everingham2010pascal}, MS COCO\cite{lin2014microsoft}, and Cityscapes\cite{cordts2016cityscapes} contain substantial numbers of images (10000, 330000, and 5000 images, respectively). This poses a significant challenge for deep learning model training.
+
+    In our research we provide a data generation pipeline for generating synthetic datasets with semantic segmentation annotations. Based on the specific requirements one can create ground-based or aerial datasets to evaluate the performance of segmentation tasks with artificial training data. 
 
 \end{document}

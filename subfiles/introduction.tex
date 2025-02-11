@@ -59,95 +59,40 @@
     \section{Introduction}
     \label{sec:introduction}
     % what background the reader needs? What is the hypothesis?
-    Compared to traditional way of generating the ground truths for semantic segmentation, we use airsim which is developed by Microsoft is one of the modern approach of generating different types of data to be used for AI research to experiment with deep learning, computer vision and reinforcement learning algorithms for autonomous vehicles. 
-    In this paper, we focus mainly on generating the semantic segmentation along with images from the scene, whereas using the airsim plugin we can also obtain bounding boxes for object detection, depth for depth estimation, etc. 
-
-    From the cityscapes paper, we see that to generate a single segmentation of an image took approximately 2.5 hours, which needs more time and resource for data collection. Our approach is to collect data with less time and effort with synthetic data generation. There is a room for open research to understand if using synthetic data improves the machine learning models? if it improves, how well can it perform testing with real data? These are the questions that are focused on in this paper. There is existing research in the ground perspective, so we are focusing on the aerial perspective to cover the aerial applications. 
-
-    When we do supervised learning, the model depends totally on the data with fine ground truth. When human labels the data there are chances of mistakes compared to our approach as obsereved these human errors can be managed well since no manual segmentation is required. The objects from the scene get segmented based on it's assigned segmentation object id. 
-
-    We can also observe how varying certain parameters with data generation will change the model's performance for example: different heights, weather, environments, number of data, etc. 
+    Semantic segmentation plays an important role in understanding the scenes or context of the images. It is referred to as content-based image segmentation and it is a computer vision problem where the task is to determine to which semantic class each pixel of an image belongs. Typically, this problem is approached in a supervised learning fashion, by relying on a dataset of images annotated at pixel level, and training with them a machine learning model to perform the task \cite{csurka2022semantic}. 
     
-    With this brief introduction one gets to understand how the modern approaches are helping researchers to focus more on generating their own datasets instead of training the models without the knowledge of what data they are using. 
+    Semantic segmentation is used in various fields such as medicine, robotics, autonomous driving, etc. For supervised learning, one would require an enormous amount of training samples to make it learn useful knowledge; without well-defined ground truths, it is a tedious process of training any supervised tasks. Annotation is time-consuming and expensive. For example, annotating the Cityscapes dataset took more than 1.5 hours on average for a single image \cite{cordts2016cityscapes}. This opens the door to the use of synthetic data generation. 
     
+    Currently there are many openly available datasets for semantic segmentation in the ground perspective for autonomous driving applications compared to aerial perspective. In the case of our proposed supervised approach, we are aiming to evaluate if using synthetic data can improve the performance using existing segmentation models. Compared to the traditional way of generating the ground-truths for semantic segmentation, modern high-level graphics platforms such as game engines (Unity, Unreal) can be used to obtain different kinds of datasets(RGB images, depth, segmentation, etc) based on their research domain to train deep learning models.
     
-    With the development of artificial intelligence, machines can distinguish between different classes of objects and background areas in images by using semantic segmentation tasks. For models to learn how to recognize the context in digital images which can include people, landscapes, medical images, and much more semantic segmentation has emerged as a vital technique. The primary aim is to explore the feasibility of utilizing synthetic data, this includes a comparative assessment of segmentation models.Though numerous datasets are available for more intricate computer vision applications, datasets from the aerial perspective are lacking to train machine learning algorithms. 
-    % what background the reader needs? What is the hypothesis?
-
-    % Deep learning is a subset of machine learning that allows computers to learn complex terms from simple representations arranged into layers \cite{Holdsworth_Scapicchio_2024}. This approach has a wide range of applications, including computer vision, which is still challenging when identifying colors, shapes, illumination, and properties of objects in an image.
-
-    % A crucial part of many computer vision applications is feature detection and matching, where \textit{keypoint features}, also called \textit{interest points}, are good indicators of object boundaries in an image, such as corners, edges, or curves \cite{szeliski_computer_2022}.
-
-    % The task of identifying a place shown in an image or a sequence of images and matching  it to a recent image of the same place is referred to in the field as \gls{vpr} \cite{chen_deep_2017}. \gls{vpr} commonly relies on three main approaches: matching local features, using global image descriptors, or a combination of both. The local feature-matching method can be difficult to scale and often proves ineffective. On the other hand, global image descriptors do not require a detection phase, making them less expensive to compute \cite{masone_survey_2021} \cite{xu_vision-based_2018}.
+    We use AirSim, an open-source framework developed by the Microsoft Research Group with the aim of providing a platform to experiment with deep learning, computer vision and reinforcement learning for autonomous vehicles. \cite{shah2018airsim}.
+    AirSim is used as an Unreal plugin in realistic environments built with Unreal Engine to generate synthetic semantic segmentation datasets. Using 7 classes such as building, road, tree, vegetation, human, vehicle, and clutter we evaluate the synthetic data with the existing real datasets to see for improvements in using artificial training data with mean IoU and per class IoU as evaluation metrics.  
     
-    % An important piece of information for identifying a place is semantics. However, traditional localization techniques usually ignore semantics \cite{xu_vision-based_2018}, which is why a learning-based method is expected for this kind of problem.
-    
+    With this brief introduction one gets to understand how the modern approaches are helping researchers to focus more on generating their own datasets instead of training the models without the knowledge of what data they are using. The primary aim is to explore the feasibility of utilizing synthetic data, including a comparative assessment of segmentation models.
 % ---------------------------------------------------------------------------
 
     \subsection{Motivation}
     \label{sec:introduction:motivation}
     % why should someone care?
 
-    Fraunhofer FKIE's aim in this R\&D project is to research in aerial applications using these segmentation models to understand if there are any hidden objects or threats in Miliray aeras.  
-    Also for scene understanding such as forest, urban land, agricultural land, etc. Detecting roads, buildings, vehicles, parking lots, construction sites for traffic management, urban planning, timely scene comparision
-
-    If the synthetic data improves the model along with real data. There will be less effort required to collect the real data and try to replicate the same number of classes with varying environments in the synthetic data generation.
-    This helps the model learn better with synthetic data. Reducing the man power and various restrictions of collecting data in real-time. 
-
-    Synthetic data generation not only helps in aerial applications can also be used for various topics of interest. 
+    In this research and development project, the Fraunhofer Institute for Communication, Information Processing and Ergonomics FKIE's goal is to use synthetic data to extract insights from any advancements in synthetic semantic segmentation and use it for aerial applications to determine whether there are any threats in military areas. Additionally, this can be utilized to comprehend scenes such as forests, cities, farms, et cetera. Road, building, car, parking lot and construction site detection for traffic control, urban planning, and rapid scene comparison.
     
-
+        % <-- This can also  be used for scene understanding such as forest, urban land, agricultural land, etc. Detecting roads, buildings, vehicles, parking lots, construction sites for traffic management, urban planning, timely scene comparision.  --> 
     
-    % According to the Garrulus project \cite{hbrsGARRULUS} from TREE Institute, the main tree species in Germany have been losing their strength and dying due to increased pest infestations and more frequent extreme weather conditions. In North Rhine-Westphalia 50\% of all spruce trees have been lost. As a result, it is necessary to replant over 135,000 hectares of damaged land.
     
-    % Effective forest management requires information on individual trees, which becomes unpractical when covering large forest areas \cite{xu_novel_2023}. Traditional methods of forest inventorying are time and resource-intensive, so alternative approaches are being developed to make it easier to assess the distinguishing characteristics of forest trees and stands \cite{kuzelka_mapping_2018}.
+    The present research intends to support the larger objective of reducing the dependence on costly manual annotation procedures while increasing the accessibility and usefulness of semantic segmentation for real-world applications by assessing the efficacy of synthetic training data. In order to overcome issues with data annotation burden, changing environmental conditions, quality assurance, domain adaptation, and cost efficiency, this study investigates the possibility of employing artificial data produced by the Unreal Engine with the AirSim plugin.  
     
-    % The Garrulus project operates an \gls{uav} over forest grounds, which tends to be extremely challenging due to occlusions, changes in illumination, and varying altitudes, among other issues experienced on outdoor scenes. Moreover, data is usually collected over several days, leading to significant changes that make it difficult to determine the location of previous images.
-
-    % Seeking for points of interest in a forest map and comparing them with other features from images of the same area taken months later, will facilitate the use of the data for localization or the detection of anomalies. This information can then be used to implement any necessary changes promptly. 
-
 % ----------------------------------------------------------------------------
 
     \subsection{Problem Statement}
     \label{sec:introduction:problem_statement}
     % What to do?
 
-    Machine learning algorithms require large-scale, high-quality, and diversified training datasets for supervised learning techniques. As the existing researches are mainly focusing on ground perspective semantic segmentation for autonomous driving applications, we observed there is a keen research requirement in the aerial fields.  
+    The laborious and costly manual annotation procedure makes it difficult to obtain large amounts of reliably labeled ground-truth data, even though deep learning-based semantic segmentation has shown good results in a variety of computer vision tasks \cite{cordts2016cityscapes}. Although creating synthetic data with programs like AirSim and Unreal Engine presents a viable solution, we have limited understanding about how well models trained in synthetic data translate to real-world situations and what factors affect the transferability of learning from synthetic to real-world environments.  
 
-    Focusing the aerial semantic segmentation, the images are generated from aerial view with groundtruth for supervised training. 
-
-    This R\&D aims to evaluate semantic segmentation using synthetic data generated from Unreal game Engine with the help of Airsim.
-
-    Existing datasets and methodologies may not be sufficient for addressing aerial applications. 
+    In order to determine the viability of synthetic data as a supplement or alternative, this R\&D examines how well deep learning models perform when trained using artificially generated semantic segmentation data from the Unreal Engine framework, AirSim plugin and assesses how well they perform when applied to real-world images. 
     
-    The upcoming sections provide an in-depth overview of the state of the art, illustrating how different authors overcome these challenges through deep learning-based approaches for semantic segmentation. Furthermore, this paper will outline proposed method, along with the evaluation of the models, conclusions, challenges faced, existing limitations, and future exploration.
+    The upcoming sections provide an in-depth overview of the state of the art, illustrating how different authors overcome these challenges through deep learning-based approaches for semantic segmentation. The related work, methodology, evaluation, conclusion and future work are presented in the upcoming sections.   
 
-    
-    % Machine learning algorithms require large-scale, high-quality, and diversified training datasets.
-    % The collection and annotation of real-world data are expensive, time-consuming, and fraught with privacy and ethical concerns. They might not cover a broad spectrum of circumstances or edge cases. The datasets and approaches that currently exist might not be able to meet certain needs or interest cases, including studying particular characteristics that affect model performance.
-    % Existing datasets and methodologies may not be sufficient for addressing specific requirements or use cases, such as examining certain attributes that impact model performance. Utilizing cutting-edge simulation environments and game engines helps to develop tailored datasets for certain scenarios or domains. 
-
-    % The project's goal is to contribute to the field of semantic segmentation by investigating the possibilities of artificial training data generated from simulations, which may address the issues involved with gathering and annotating real-world data.
-    
-    %What to do
-
-    % Aligning images taken by an \gls{uav} with other images from a similar perspective  due to the smaller area covered in comparison with satellite images, which contains a larger landscape.
-    
-    % As discussed in the next section, current leading methods generally focus on correlating satellite images with drone images in forested areas or matching drone images with those captured by cars in urban environments. Additionally, numerous strategies seek to eliminate dependence on GPS and rely solely on visual data.
-    
-    % This project aims to apply a computer vision technique to identify features of interest in a forest that remain invariant regardless of the season in which the images were captured. Although small-scale images taken by \glspl{uav} can be challenging, this project will utilize GPS information to enhance image-to-image localization.
-
-    % Figure \ref{fig:matching_source_query} illustrates the expected results of this project for seasonal-invariant \gls{uav} localization with a known map as the source and an image crop from a later map as the query. To ensure successful matching over time, it's crucial to identify robust and reliable features.
-
-    % \begin{figure}[!h]
-    %   \centering
-    %   % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-    %    \includegraphics[width=1.0\linewidth]{figures/matching_source_query.png}
-    %    \caption{Seasonal-invariant UAV localization using image data and a known map}
-    %    \label{fig:matching_source_query}
-    % \end{figure}
-
-    % The following sections provide an in-depth overview of the state of the art, illustrating how different authors overcome these challenges through deep learning-based approaches for image matching. Furthermore, this paper will outline proposed method, along with the evaluation of the model, conclusions, identified limitations, and suggest avenues for future exploration.
-    
 
 \end{document}
