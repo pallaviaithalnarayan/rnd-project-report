@@ -10,41 +10,41 @@
 
     % Feel free to rename this section to better reflect the concrete topic you are discussing.
 
-    This section details the methodological approach employed to evaluate the efficacy of semantic segmentation models trained on synthetic data generated using AirSim and Unreal Engine. 
-    The evaluation leverages real-world data from the ISPRS dataset and test various hypotheses related to aerial and ground perspectives, data composition, model training strategies, and dataset characteristics. The methodology is organized into the following key components:
+    % This section details the methodological approach employed to evaluate the efficacy of semantic segmentation models trained on synthetic data generated using AirSim and Unreal Engine. 
+    % The evaluation leverages real-world data from the ISPRS dataset and test various hypotheses related to aerial and ground perspectives, data composition, model training strategies, and dataset characteristics. The methodology is organized into the following key components:
     
-    1. Synthetic Data Generation, 2. Real-World Dataset Selection, 3. Semantic Segmentation Models.
+    % 1. Synthetic Data Generation, 2. Real-World Dataset Selection, 3. Semantic Segmentation Models.
     
-    1. Synthetic Data Generation: 
-    For the evaluation framerwork first we need to generate the synthetic semantic segmentation to train the models. 
-    a. Tools \& platforms:
-    \subfile{tables/methodology_table1.tex}
-    Hardware requirements:
-    For optimal performance, the following hardware configuration is recommended: 
-    GPU: NVIDIA RTX 3090 with 24 GB VRAM
-    CPU: Intel Core i9-10900K or AMD Ryzen 9 5900X
-    RAM: 128 GB DDR4
-    Storage: 2 TB NVMe SSD
+    % 1. Synthetic Data Generation: 
+    % For the evaluation framerwork first we need to generate the synthetic semantic segmentation to train the models. 
+    % a. Tools \& platforms:
+    % \subfile{tables/methodology_table1.tex}
+    % Hardware requirements:
+    % For optimal performance, the following hardware configuration is recommended: 
+    % GPU: NVIDIA RTX 3090 with 24 GB VRAM
+    % CPU: Intel Core i9-10900K or AMD Ryzen 9 5900X
+    % RAM: 128 GB DDR4
+    % Storage: 2 TB NVMe SSD
     
-    Environments:
-    Synthetic datasets are created for different aerial heights (10m, 15m, 25m) across various environments, including: City Park, Downtown West, Landscape Mountains Village, Modular Neighborhood package. 
+    % Environments:
+    % Synthetic datasets are created for different aerial heights (10m, 15m, 25m) across various environments, including: City Park, Downtown West, Landscape Mountains Village, Modular Neighborhood package. 
 
-    AirSim setup: 
-    By following the airsim documentation https://microsoft.github.io/AirSim/ we need to setup unreal project with airsim, it exposes APIs to interact with vehicle in the simulation programmatically using simulated quadrotor, simulated car or computer vision mode.
+    % AirSim setup: 
+    % By following the airsim documentation https://microsoft.github.io/AirSim/ we need to setup unreal project with airsim, it exposes APIs to interact with vehicle in the simulation programmatically using simulated quadrotor, simulated car or computer vision mode.
     
-    Annotations: 
-    Each synthetic image is automatically annotated with precise semantic segmentation masks, ensuring accurate ground truth for model training and evaluation with the help of AirSim Image APIs using computer vision mode.
+    % Annotations: 
+    % Each synthetic image is automatically annotated with precise semantic segmentation masks, ensuring accurate ground truth for model training and evaluation with the help of AirSim Image APIs using computer vision mode.
 
-    Data Augmentation:
-    Augmentation techniques such as rotation, scaling, and color jittering are applied to enhance dataset variability and robustness.
+    % Data Augmentation:
+    % Augmentation techniques such as rotation, scaling, and color jittering are applied to enhance dataset variability and robustness.
     
-    We generate the datasets by collecting waypoints in the interested unreal environment's scenes. With those 
-    As part of R\&D we have a data generation pipeline with complete documentation on how to generate the data in the appendix section and also more details can be explored from airsim documentation https://microsoft.github.io/AirSim/. 
+    % We generate the datasets by collecting waypoints in the interested unreal environment's scenes. With those 
+    % As part of R\&D we have a data generation pipeline with complete documentation on how to generate the data in the appendix section and also more details can be explored from airsim documentation https://microsoft.github.io/AirSim/. 
 
-    Once the datasets are generated using our pipeline, we need to choose a real-world dataset for the evaluation of segmentation models. 
+    % Once the datasets are generated using our pipeline, we need to choose a real-world dataset for the evaluation of segmentation models. 
     
-    2. Real-World Dataset: 
-    Aerial real-world datasets are very few in number as manual segmentation of the real-world data is expensive and time consuming. We have choosen ISPRS dataset to compare our results with the real-world data. 
+    % 2. Real-World Dataset: 
+    % Aerial real-world datasets are very few in number as manual segmentation of the real-world data is expensive and time consuming. We have choosen ISPRS dataset to compare our results with the real-world data. 
 
     
     % In this section of the paper the most effective strategies for developing the learning model architecture will be explored. We will also examine the methods and criteria for evaluating its performance, ensuring a comprehensive understanding of both design and assessment processes.
@@ -72,79 +72,58 @@
 %   \label{fig:image_preprocessing}
 % \end{figure*}
 
-
-\subsection{Proposed Approach}
-
-% Currently, the approaches discussed in related work consider locations without GPS access or large-scale images, such as satellite images, which may not change significantly over time. In general, characteristics that remain unchanged in a specific location can be easier to identify in larger images, as they provide more visual information and allow for a better view of surrounding areas. The challenge with focusing on small areas of forest ground is that plants and trees tend to grow over time, making it more difficult to recognize edges or surrounding corners as reference points.
-
-% The proposed network is inspired by the works of Kinari et al. \cite{kinnari_lsvl_2023}, \cite{kinnari_season-invariant_2021} and Samano et al. \cite{samano_global_2021}, integrating a ResNet-based framework with pre-trained weights. It features a convolutional layer head with ReLU activation for effective feature extraction. The network utilizes cosine similarity to compare image outputs. Key considerations in its design include maximizing feature extraction and minimizing computational overhead, ultimately providing a robust framework for visual localization tasks using UAV and satellite imagery, enhancing accuracy and efficiency in various environments.
-
-% The following subsections will address how to overcome these challenges by employing a deep learning-based approach for image matching, utilizing a Convolutional Neural Network (CNN) architecture.
-
-\subsection{Environment Setup}
-
-% The dataset used for this project consist of orthogonal maps created by the Garrulus project from images captures by a drone. Before incorporating the data into a learning-based model, it is essential to identify recognizable objects within the images. This understanding will help define what the model could search for and determine as invariant.
-
-% According to Nixon and Aguado \cite{nixon_feature_2020}, grayscale images are effective for identifying low-level features such as edges and corners. Therefore, a cropped section of an orthogonal map was taken, converted to greyscale, and adjusted for contrast. The pixel values were modified to create a clear image that allows for the detection of specific features depending on each case. The results are illustrated in Figure \ref{fig:image_preprocessing}. As a reference, the pixel value is black when it is zero and white color is represented by the number 255. The binary threshold in  Figure \ref{fig:binary_threshold} sets all pixel values that are 200 or below to zero, while values above 200 are set to 255. In image \ref{fig:set_to_zero}, values from 120 or below are set to zero, while the remaining values retain their greyscale values. Lastly, image \ref{fig:contrast_stretch} enhances contrast by mapping the value 70 to zero and the value 140 to the maximum possible value. Threshold values were selected arbitrarily based on informed judgment and understanding to facilitate the clear identification of specific objects within the image.
-
-% It is important to note that while shadows are prominent in the images, they are not considered invariant features. On the other hand, tree trunks and roots are significant characteristics that are likely to be identified by the model since are the remianing and most remarked objects in the images.
-
-
-% \subsection{Processing and Classification of Georeferenced Orthoimages}
-
-% The dataset comprises a collection of orthoimages derived from a pair of georeferenced RGB maps, which include localization coordinates with an accuracy of 2.404 centimeters. These orthoimages contain GPS location data. %(EPSG:25832 coordinates) 
-
-% Since labeling the data would have been time-consuming and less beneficial for the model due to the large volume of information contained in each image, the georeferenced maps were divided into smaller images of 224x224 pixels called patches. This size was chosen because it is the only format accepted by the ResNet50 model. Otherwise, the image should be rescaled and lose quality.
-
-% The images were categorized into two groups: positive and negative samples. Positive samples consist of pairs of patches taken from the same area but during different seasons. In contrast, negative samples include patches from different regions of the map that were randomly paired. During this labeling classification, a threshold was applied due to limitations in GPS precision encountered during each drone mission.
-
-
-\subsection{Data Generation with Groundtruth Segmentation}
-
-% The proposed network draws inspiration from the works of Kinari et al. \cite{kinnari_season-invariant_2021} \cite{kinnari_lsvl_2023} and Samano et al. \cite{samano_global_2021}. This architecture integrates a ResNet-based framework that utilizes pre-trained weights. Unlike previous approaches, it includes a head with convolutional layers and ReLU activation to extract features from the images. The output for each image is then compared using cosine similarity, which provides a measure of similarity between the two vectors, as illustrated in Figure\ref{fig:model_arch}.
-
-% In developing this methodology, several key considerations were taken into account. The architecture is designed to maximize feature extraction while minimizing computational overhead. Leveraging pre-trained weights from established ResNet50 models allows for improved performance on our specific task by utilizing learned features from large datasets.
-
-% This methodology establishes a robust framework for conducting visual localization tasks using \gls{uav} images, enhancing accuracy and efficiency in diverse environmental conditions.
-
-% \begin{figure}[!h]
-%   \centering
-%   % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-%    \includegraphics[width=1.0\linewidth]{figures/diagram_II.drawio.png}
-%    \caption{The proposed model architecture uses ResNet50, along with a head that includes convolutional layers and ReLU activation functions, to extract features for measuring similarity between vectors.}
-%    \label{fig:model_arch}
-% \end{figure}
-
-    % SYSTEM OUTLINE
-    % Firstly, UAVs capture an image during its flight or a frame extracted from the video as input. Visual localization system preprocesses and describes the input image and the images in the reference image database by feature vectors, then image matching unit measures features similarity. Finally UAVs aerial image is mapped to the large-scale reference image. After matching the UAVs aerial image with the reference image database, the position of the UAVs can be determined according to the best matched reference image; if the matching result does not satisfy the conditions in the reference image database, the UAVs aerial image will be updated to the reference image database.
-
-    % Describe all conceptual details about your approach in this section.
-    % Add any necessary subsections to improve the presentation.
-
-    % Feel free to rename this section to better reflect the concrete topic you are discussing.
-
-    % - Introduce your notations such as variable definitions, etc.
-     
-    %  - Write the building blocks of your methodology as subsections. Indicate them by subsection titles.
-     
-    %  - For the most essential building block (usually the novel contribution of your thesis), write down the details of the methodology. For example, for a maximum likelihood approach, write down the likelihood equation; for an estimation procedure, write down the estimator.
-
-    %  1. Get ortho map
-    %  2. get map patches
-    %  3. linear conversion from patches pixels to map coordinates
-    %  4. 
-    % % Experimental Setup:
-    % % - UAV Dataset
-    % % - Ground Truth
-
+    This section details the methodological approach employed to evaluate the efficacy of semantic segmentation models trained on synthetic data generated using AirSim and Unreal Engine. 
+    We propose 2 staged approaches consisting of 1. Synthetic Data Generation 2. Training and Evaluation of Semantic Segmentation. 
     
-    % Learning rate = 10e-6 as in \cite{kinnari_lsvl_2023}. first it was 0.001
+    \subsection{Synthetic Data Generation}
+    \subsubsection{AirSim Setup}
+    To generate the synthetic data, set up Unreal Engine Project(UE versions 4.27+) with AirSim plugin integration using the AirSim repository https://github.com/CodexLabsLLC/Colosseum and follow AirSim documentation https://microsoft.github.io/AirSim/ which exposes APIs to interact with the vehicle in the simulation programmatically using a simulated quadrotor, simulated car or computer vision mode.
+    AirSim provides a configuration for users to customize the camera settings to capture the data such as CaptureSettings with ImageType, Width, Height, and FOV\_Degrees, etc which is a key feature for diverse data generation. 
+    In order to balance computational demands and preserve visual fidelity, a resolution of 1280x720(720p) standard High Definition (HD) is used. We selected 3 to 4 environments to generate the datasets for our semantic segmentation evaluation with City Park (UE 5.2.1), Downtown West (UE 5.2.1), neighborhood(4.27.2), and Landscape Mountain's Village environment(4.27.2). 
+    To achieve optimal segmentation annotations, carefully configured material properties in Unreal Engine (UE) using opaque blend modes and default Lit shading models. To eliminate potential rendering artifacts, we have eliminated post-process volumes from the UE environment.
+    
+    \subsubsection{Waypoint Collector}
+    To reproduce the data collection process, a graphical user interface utilizing PyQt5 is developed to facilitate efficient waypoint collection. Before generating the data, run the UE simulation from the player start position to store the camera coordinates(X, Y, Z) and orientation(W, X, Y, Z) in a JSON format using AirSim's simGetVehiclePose API.
+    This system captures camera positions at predefined intervals, maintaining a minimum distance of 0.5 meters between waypoints to ensure comprehensive and diverse scene coverage as showed in the figure. This approach ensures both precision and efficiency in our waypoint collection process for multi-altitudes.
 
-    % NOT SIAMESE NETWORK, BUT:
-    % supervised what?? (:
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/waypoint_collector.png}
+        \caption{Waypoint Collector}
+        \label{fig:enter-label}
+    \end{figure}
+    
+    % If material attributes in UE are not set to basic Lit shading models and opaque blend modes the appropriate segmentation would not be assigned.
 
+    \subsubsection{Segmentation Data Generation}
+     Our implementation showcases tailored strategies for semantic labeling of desired objects to assign segmentation that effectively addresses the unique challenges posed by different Unreal Engine versions, particularly concerning AirSim integration limitations. In environments built with Unreal Engine 4.27, we developed a label-based mapping approach, primarily due to inconsistencies in how AirSim\'s simListSceneObjects API captures tag-based actors, leading to missing some of the scene objects. This challenge notably impacted InstancedFoliageActors, such as trees and vegetation. To overcome this, we created a label mapping JSON that maps scene objects to their corresponding semantic classes using precise regex patterns. This mapping file is integral to our data generation tool, which adeptly assigns appropriate segmentation IDs to every object in the scene. In contrast, for Unreal Engine 5.2.1 environments, we adopted an efficient tag-based system. Here, objects are strategically tagged with predefined classes like building, road, and tree within the Unreal Editor. We then leverage a custom object extractor script executed within the Unreal Engine framework to comprehensively collect all tagged objects. This script generates a JSON file that outlines each object's structured list and its respective tags. Our data generation tool uses this JSON file to assign segmentation IDs to objects utilizing AirSim\'s simSetSegmentationObjectID API. Both approaches adhere to a unified segmentation color scheme of RGB format "https://github.com/microsoft/AirSim/blob/main/docs/seg_rgbs.txt", with buildings [196, 30, 8], roads [102, 16, 239], trees [11, 236, 9], vegetation [153, 108, 6], vehicles [242, 107, 146], humans [255, 255, 255], and clutter [0, 0, 0]. Prior to assigning new segmentation IDs, our system rigorously resets all existing IDs to 0, ensuring pristine segmentation masks. This dual methodology not only guarantees consistent semantic labeling across various Unreal Engine versions but also enriches the quality and reliability of the generated segmentation masks. 
 
-    % NOTE: feature detection through time will be better from a satellite perspective. The current approach might vary A LOT due to the small spaces taken from the dataset
+     \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{figures/segmentation_data_generator.png}
+        \caption{Waypoint Collector}
+        \label{fig:enter-label}
+    \end{figure}
+    
+     Waypoints collected from the waypoint collector tool are used in the segmentation data generator tool, by specifying the required capture height with the North-East-Down (NED) coordinate system, which utilizes camera height as a negative Z-coordinate. The collected data is categorized and stored into height-specific directories, such as "10m," "15m," or "25m". Additionally, logs the comprehensive metadata for each collection, which includes key height and capture parameters, ensuring robust data provenance. This approach guarantees consistent and reproducible data collection across various altitudes, crucial for analyzing the impact of height on segmentation performance and developing effective segmentation models at different flying heights.
+
+     Time Analysis of data generation in our approach is observed that capturing each waypoint with the collection tool typically requires around 1 second. Following this, the data generation process encompassing camera positioning, RGB, and segmentation mask capture, verification, and storage averages about 3 seconds per image pair. Our implementation results revealed that capturing 34 image pairs was accomplished in 99.58 seconds without any quality issues or failed captures. Based on this performance, we can anticipate that generating a dataset of 1000 image pairs would require approximately less than an hour dedicated solely to the data generation phase.
+
+    \subsection{Training and Evaluation Framework}
+    The training strategies are followed from the paper "UAVid: A Semantic Segmentation Dataset for UAV Imagery" \cite{lyu2020uavid}
+    The generated synthetic dataset is systematically organized into train, validation, and test splits, adhering to the author Lyu's strategic ratio of 3:1:2. Each split comprises paired RGB images alongside their corresponding segmentation masks, captured at specified altitudes of 10m, 15m, and 25m. Datasets collected from multiple environments are combined to train and evaluate against real dataset. 
+
+    \subsubsection{Model Architecture and Training}
+    Our framework employs two semantic segmentation architectures: UNet with a ResNet34 backbone an encoder-decoder architecture and a transformer architecture, SegFormer-B3, both recognized for their exceptional performance in segmentation tasks. The implementation of UNet is facilitated by the established segmentation models library from PyTorch(https://smp.readthedocs.io/en/latest/models.html#unet), while the SegFormer model is integrated using the HuggingFace model(https://huggingface.co/nvidia/segformer-b3-finetuned-cityscapes-1024-1024). 
+    Both architectures receive input images of size 512×512, standardized through resizing and normalization using mean(0.485, 0.456, 0.406) and standard deviation(0.229, 0.224, 0.225) to match the ImageNet pre-training statistics. We apply data augmentation for train split such as left-to-right flip randomly, color augmentation, including random hue operation, random contrast operation, random brightness operation, random saturation operation.
+    For real-world datasets, an additional color mapping mechanism ensures consistency between synthetic and real data by converting real-world mask colors to match the synthetic labels for visualization of predictions during evaluation.
+    
+    % The training pipeline is comprehensively designed and includes: - A custom dataset class that effectively manages both synthetic and real data. - Innovative data augmentation techniques applied through the albumentations library, which significantly enhance model generalization and enable robust performance across various conditions. 
+    Custom dataset class handling both synthetic and real data 
+    Data augmentation using albumentations library for improved generalization 
+    Learning rate scheduling with exponential decay 
+    Regular model checkpointing and performance logging 
+
     
 \end{document}
 
