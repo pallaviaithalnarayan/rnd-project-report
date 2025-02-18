@@ -5,15 +5,34 @@
     \section*{Appendix}
     \label{sec:appendix}
 
-    Please limit the main part of the report to 20 pages (not including the references, the statement of originality, and the appendix).
+        
+    % a. Tools \& platforms:
+    \input{tables/methodology_table1}
+     \begin{table}[ht]
+        \caption{Hardware used for synthetic data generation}
+        \label{tab:softRequirementforSyntheticDataGeneration} % use this line as reference to describe the table in the text. 
+        \begin{tabular}{M{0.25\linewidth} M{0.65\linewidth}}
+            \hline
+            \cellcolor{gray!10!white} Hardware Component & \cellcolor{gray!10!white} Specification \\\hline
+            GPU & NVIDIA RTX 3500 Ada Generation \\\hline
+            CPU & 13th Gen Intel(R) Core(TM) i9-13950HX 2.20 GHz \\\hline
+            RAM & 64 GB \\\hline
+            Storage & 1 TB  \\\hline
+        \end{tabular}
+    \end{table}
+    
+    % {tables/methodology_table1.tex}
+    
+    % You can add any additional details about your work in the appendix, such as:
+    % \begin{itemize}
+    %     \item extra results that do not necessarily belong in Sec. \ref{sec:evaluation}
+    %     \item more detailed justifications of certain algorithm design decisions
+    %     \item algorithm proofs
+    % \end{itemize}
 
-    In your appendix, you can add any additional details about your work, such as:
-    \begin{itemize}
-        \item extra results that do not necessarily belong in Sec. \ref{sec:evaluation}
-        \item more detailed justifications of certain algorithm design decisions
-        \item algorithm proofs
-    \end{itemize}
 
-    Additionally, in the case of using AI assistants, describe in detail what content was generated using an AI assistant.
-    In particular, name the AI assistant(s) that you used and how they were used (e.g. which prompts were used, and for which parts of the project).
+    % Process images (grayscale, find edges, find features)
+    % Filter images as in "Most robust features..." paper to clean the image
+
+    % Try to limit the main part of the report to 20 pages (not including the reference and appendix sections).
 \end{document}
